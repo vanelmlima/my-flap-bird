@@ -108,3 +108,10 @@ class Cano:
         self.altura = random.randrange(50, 550)
         self.pos_topo = self.altura - self.CANO_TOPO.get_height()
         self.pos_base = self.altura + self.DISTANCIA
+
+    def mover(self):
+        self.x -= self.VELOCIDADE
+
+    def desenhar(self, tela):
+        tela.blit(self.CANO_TOPO,(self.pos_topo))
+        tela.blit(self.CANO_BASE,(self.pos_base))
