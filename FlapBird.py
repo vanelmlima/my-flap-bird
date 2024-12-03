@@ -60,10 +60,36 @@ class Passaro:
             if self.angulo > -90:
                 self.angulo -= self.VELOCIDADE_DE_ROTACAO
 
+    def desenhar(self, tela):
+        # definir animação do pássaro
+        self.contagem_imagem += 1
+        # a cada tempo de animação a imagem muda
+        if self.contagem_imagem < self.TEMPO_DE_ANIMACAO:
+            self.imagem = self.IMGS[0]
+        elif self.contagem_imagem < self.TEMPO_DE_ANIMACAO * 2:
+            self.imagem = self.IMGS[1]
+        elif self.contagem_imagem < self.TEMPO_DE_ANIMACAO * 3:
+            self.imagem = self.IMGS[2]
+            self.imagem = self.IMGS[1]
+        elif self.contagem_imagem >= self.TEMPO_DE_ANIMACAO * 4 + 1:
+            self.imagem = self.IMGS[0]
+            self.contagem_imagem = 0
+
+        # se o pássaro estiver caindo não bate a asa
+        if self.angulo <= 80:
+            self.imagem = self.IMGS[1]
+            # e a proxima batida de asa vai ser pra baixo
+            self.contagem_imagem = self.TEMPO_DE_ANIMACAO*2
+
+        # desenhar a imagem
+        rotacionando_imagem = pygame.transform.rotate(self.imagem, self.angulo)
+        pos_centro_imagem = self.imagem.get_rect(topleft=(self.x, self.y)).center
+        retangulo = rotacionando_imagem.get_rect(center=pos_centro_imagem)
+        tela.blit(rotacionando_imagem, retangulo.topleft)
+
+    def get_mask(self):
+        pygame.mask.from_surface(self.imagem)
 
 class Cano:
-    pass
-
-
-class Chao:
-    pass
+    DISTANCIA = 200
+    VELOCIDADE = 5
