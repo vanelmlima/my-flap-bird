@@ -93,3 +93,18 @@ class Passaro:
 class Cano:
     DISTANCIA = 200
     VELOCIDADE = 5
+     
+    def __init__(self, x):
+        self.x = x
+        self.altura = 0
+        self.pos_topo = 0
+        self.pos_base = 0
+        self.CANO_TOPO = pygame.transform.flip(IMG_CANO, False, True)
+        self.CANO_BASE =  IMG_CANO
+        self.passou = False
+        self.definir_altura()
+
+    def definir_altura(self):
+        self.altura = random.randrange(50, 550)
+        self.pos_topo = self.altura - self.CANO_TOPO.get_height()
+        self.pos_base = self.altura + self.DISTANCIA
