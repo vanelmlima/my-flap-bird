@@ -178,4 +178,18 @@ def main():
     pontos = 0
     relogio = pygame.time.Clock()
 
-    
+    rodando = True
+    while rodando:
+        relogio.tick(30)
+        
+        for evento in pygame.event.get():
+            if evento.type == pygame.QUIT:
+                rodando = False
+                pygame.quit()
+                quit()
+            if evento.type == pygame.KEYDOWN:
+                if evento.key == pygame.K_SPACE:
+                    for passaro in passaros:
+                        passaro.pular()
+
+        desenhar_tela(tela, passaros, canos, chao, pontos)
