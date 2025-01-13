@@ -113,8 +113,8 @@ class Cano:
         self.x -= self.VELOCIDADE
 
     def desenhar(self, tela):
-        tela.blit(self.CANO_TOPO,(self.pos_topo))
-        tela.blit(self.CANO_BASE,(self.pos_base))
+        tela.blit(self.CANO_TOPO,(self.x, self.pos_topo))
+        tela.blit(self.CANO_BASE,(self.x, self.pos_base))
 
     def colidir(self, passaro):
         passaro_mask = passaro.get_mask()
@@ -131,3 +131,26 @@ class Cano:
             return True
         else:
             return False
+
+class Chao:
+    VELOCIDADE = 5
+    LARGURA = IMG_CHAO.get_width()
+    IMAGEM = IMG_CHAO
+
+    def __init__(self, y):
+        self.y = y
+        self.x0 = 0
+        self.x1 = self.LARGURA
+
+    def mover(self):
+        self.x0 -= self.VELOCIDADE
+        self.x1 -= self.VELOCIDADE
+
+        if (self.x0 + self.LARGURA) < 0:
+            self.x0 = self.LARGURA
+        if  (self.x1 + self.LARGURA) < 0:
+            self.x1 = self.x1 + self.LARGURA
+    
+    def desenhar(self, tela):
+        tela.blit(self.IMAGEM,(self.x0, self.y))
+        tela.blit(self.IMAGEM,(self.x1, self.y))
