@@ -169,3 +169,13 @@ def desenhar_tela(tela, passaros, canos, chao, pontuacao):
     tela.blit(texto, (TELA_LARGURA - 15 - texto.get_width()), 15)
 
     pygame.display.update()
+
+def main():
+    passaros = [Passaro(230,350)]
+    chao = Chao(750)
+    canos = [Cano(700)]
+    tela = pygame.display.set_mode((TELA_LARGURA,TELA_ALTURA))
+    pontos = 0
+    relogio = pygame.time.Clock()
+
+    
