@@ -2,7 +2,7 @@ import pygame
 import random
 
 TELA_LARGURA = 500
-TELA_ALTURA = 800
+TELA_ALTURA = 650
 
 IMG_BACKGROUND = pygame.transform.scale2x(pygame.image.load('imgs/bg.png'))
 IMG_CHAO = pygame.transform.scale2x(pygame.image.load('imgs/base.png'))
@@ -14,8 +14,7 @@ IMGS_PASSARO = [
 ]
 
 pygame.font.init()
-FONTE_PONTOS = pygame.font.SysFont('arial', 50, bold=True)
-
+FONTE_PONTOS = pygame.font.SysFont('arial', 0, bold=True)
 
 class Passaro:
     IMGS = IMGS_PASSARO
@@ -88,7 +87,7 @@ class Passaro:
         tela.blit(rotacionando_imagem, retangulo.topleft)
 
     def get_mask(self):
-        pygame.mask.from_surface(self.imagem)
+        return pygame.mask.from_surface(self.imagem)
 
 class Cano:
     DISTANCIA = 200
@@ -105,7 +104,7 @@ class Cano:
         self.definir_altura()
 
     def definir_altura(self):
-        self.altura = random.randrange(50, 550)
+        self.altura = random.randrange(50, 450)
         self.pos_topo = self.altura - self.CANO_TOPO.get_height()
         self.pos_base = self.altura + self.DISTANCIA
 
@@ -147,26 +146,27 @@ class Chao:
         self.x1 -= self.VELOCIDADE
 
         if (self.x0 + self.LARGURA) < 0:
-            self.x0 = self.LARGURA
+            self.x0 = self.x1 + self.LARGURA
         if  (self.x1 + self.LARGURA) < 0:
-            self.x1 = self.x1 + self.LARGURA
+            self.x1 = self.x0 + self.LARGURA
     
     def desenhar(self, tela):
         tela.blit(self.IMAGEM,(self.x0, self.y))
         tela.blit(self.IMAGEM,(self.x1, self.y))
 
 def desenhar_tela(tela, passaros, canos, chao, pontuacao):
-    tela.blit(IMG_BACKGROUND)
+    tela.blit(IMG_BACKGROUND, (0,0))
 
     for passaro in passaros:
         passaro.desenhar(tela)
     for cano in canos:
-        cano.desenhar()
+        cano.desenhar(tela)
 
     chao.desenhar(tela)
-    
+
+    pontos = 0
     texto = FONTE_PONTOS.render(f"Pontuação: {pontos}", 1, (255,255,0))
-    tela.blit(texto, (TELA_LARGURA - 15 - texto.get_width()), 15)
+    tela.blit(texto, (TELA_LARGURA - 15 - texto.get_width(), 15)) 
 
     pygame.display.update()
 
