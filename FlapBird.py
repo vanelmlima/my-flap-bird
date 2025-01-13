@@ -2,7 +2,7 @@ import pygame
 import random
 
 TELA_LARGURA = 500
-TELA_ALTURA = 650
+TELA_ALTURA = 600
 
 IMG_BACKGROUND = pygame.transform.scale2x(pygame.image.load('imgs/bg.png'))
 IMG_CHAO = pygame.transform.scale2x(pygame.image.load('imgs/base.png'))
@@ -21,7 +21,7 @@ class Passaro:
     # animações de rotação do pássaro
     ROTACAO_MAXIMA = 25
     VELOCIDADE_DE_ROTACAO = 20
-    TEMPO_DE_ANIMACAO = 5
+    TEMPO_DE_ANIMACAO = 2
 
     def __init__(self, x, y):
         self.x = x
@@ -91,7 +91,7 @@ class Passaro:
 
 class Cano:
     DISTANCIA = 200
-    VELOCIDADE = 5
+    VELOCIDADE = 2
      
     def __init__(self, x):
         self.x = x
@@ -166,21 +166,22 @@ def desenhar_tela(tela, passaros, canos, chao, pontuacao):
 
     pontos = 0
     texto = FONTE_PONTOS.render(f"Pontuação: {pontos}", 1, (255,255,0))
-    tela.blit(texto, (TELA_LARGURA - 15 - texto.get_width(), 15)) 
+    tela.blit(texto, (TELA_LARGURA - 5 - texto.get_width(), 5)) 
 
     pygame.display.update()
 
 def main():
-    passaros = [Passaro(230,350)]
-    chao = Chao(750)
-    canos = [Cano(700)]
+    passaros = [Passaro(200,250)]
+    chao = Chao(550)
+    canos = [Cano(500)]
     tela = pygame.display.set_mode((TELA_LARGURA,TELA_ALTURA))
     pontos = 0
     relogio = pygame.time.Clock()
 
     rodando = True
+    pygame.time.wait(3000)
     while rodando:
-        relogio.tick(30)
+        relogio.tick(60)
         
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
